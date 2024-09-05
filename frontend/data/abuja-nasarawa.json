@@ -1,0 +1,35 @@
+{
+  "states": [
+    {
+      "name": "Nasarawa",
+      "alias": "nasarawa",
+      "lgas": [
+        "Akwanga",
+        "Awe",
+        "Doma",
+        "Karu",
+        "Keana",
+        "Keffi",
+        "Lafia",
+        "Kokona",
+        "Nasarawa Egon",
+        "Nasarawa",
+        "Obi",
+        "Toto",
+        "Wamba"
+      ]
+    },
+    {
+      "name": "Federal Capital Territory",
+      "alias": "abuja",
+      "lgas": [
+        "Abaji",
+        "Bwari",
+        "Gwagwalada",
+        "Kuje",
+        "Kwali",
+        "Municipal Area Council"
+      ]
+    }
+  ]
+}
