@@ -1,8 +1,6 @@
 from django.db import models
 from accounts.models import CustomUser as User
 
-from items.models import Item
-
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -29,12 +27,12 @@ class OrderDetail(models.Model):
         return f"{self.item} ({self.quantity}) | {self.price}"
 
 
-class Cart(models.Model):
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    qty = models.IntegerField(default=1)
-    color = models.CharField(max_length=50, null=True, blank=True)
-    size = models.CharField(max_length=50, null=True, blank=True)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+# class Cart(models.Model):
+#     # item = models.ForeignKey(Item, on_delete=models.CASCADE)
+#     qty = models.IntegerField(default=1)
+#     color = models.CharField(max_length=50, null=True, blank=True)
+#     size = models.CharField(max_length=50, null=True, blank=True)
+#     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class DeliveryMode(models.Model):

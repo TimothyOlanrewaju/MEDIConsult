@@ -20,7 +20,7 @@ const OrderDetails = ({ baseURL }) => {
   },[])
 
   return (
-    <> <br /><br /><br /><br />
+    <> 
         <div className='container text-center'>
             <h3>Order ID: {id}</h3>
             {ordeDetails.map((detail)=>(

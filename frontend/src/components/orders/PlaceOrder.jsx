@@ -15,10 +15,16 @@ export default function PlaceOrders({ baseURL }) {
   const navigate = useNavigate()
 
 
+  const [prescriptions, setPrescriptions] = useState([]);
+  const [prescription, setPrescription] = useState('');
+  const [morningDosage, setMorningDosage] = useState(1);
+  const [afternoonDosage, setAfternoonDosage] = useState(1);
+  const [nightDosage, setNightDosage] = useState(1);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/data/nigeria-state-and-lgas.json");
+        const response = await fetch("/src/data/StatesLGA.json");
         const data = await response.json();
         setStates(data.states);
       } catch (error) {
@@ -75,11 +81,32 @@ export default function PlaceOrders({ baseURL }) {
     navigate('/orders')
   };
 
+  const addPrescription = () => {
+    if (prescription) {
+      const newPrescription = {
+        id: Date.now(),
+        name: prescription,
+        dosage: `${morningDosage || '0'} X ${afternoonDosage || '0'} X ${nightDosage || '0'}`
+      };
+      setPrescriptions([...prescriptions, newPrescription]);
+      // Clear input fields
+      setPrescription('');
+      setMorningDosage('');
+      setAfternoonDosage('');
+      setNightDosage('');
+    }
+  };
+
+  const deletePrescription = (id) => {
+    setPrescriptions(prescriptions.filter(p => p.id !== id));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
-      <br />
-      <br />
-      <br />
       <h3 className="text-center" style={{color:"green"}}>{msg}</h3>
       <h2 className="text-center">Order Form</h2>
       <div className="container">
@@ -190,34 +217,79 @@ export default function PlaceOrders({ baseURL }) {
           <button type="submit" className="btn btn-success w-100 mt-1">ORDER</button>
         </form>
       </div>
+      <br /><br />
 
-      <br />
-      <br />
-
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-3 mb-4">
-                <div class="column-header bg-primary text-white text-center">Doctors</div>
-                <div class="column-item">🟢 Doctor 1</div>
-                <div class="column-item">🟢 Doctor 2</div>
+    <div className="container mt-5">
+      <h2 className="mb-4 text-center">Prescription Form</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="row">
+          <div className="col-md-6">
+            <div className="mb-3">
+              <input
+                type="text"
+                className="form-control p-3"
+                value={prescription}
+                onChange={(e) => setPrescription(e.target.value)}
+                placeholder="Enter the prescription"
+              />
             </div>
-            <div class="col-md-3 mb-4">
-                <div class="column-header bg-primary text-white text-center">Pharmacists</div>
-                <div class="column-item">🟢 Pharmacist 1</div>
-                <div class="column-item">🟢 Pharmacist 2</div>
+            <div className="mb-3 d-flex">
+              <input
+                type="number"
+                className="form-control me-2"
+                value={morningDosage}
+                placeholder="AM"
+                min="0"
+                onChange={(e) => {
+                  const value = Math.max(0, parseInt(e.target.value) || 0);
+                  setMorningDosage(value.toString());
+                }}                
+              />
+              <input
+                type="number"
+                className="form-control me-2"
+                value={afternoonDosage}
+                placeholder="Noon"
+                min="0"
+                onChange={(e) => {
+                  const value = Math.max(0, parseInt(e.target.value) || 0);
+                  setAfternoonDosage(value.toString());
+                }}
+                
+              />
+              <input
+                type="number"
+                className="form-control"
+                value={nightDosage}
+                placeholder="PM"
+                min="0"
+                onChange={(e) => {
+                  const value = Math.max(0, parseInt(e.target.value) || 0);
+                  setNightDosage(value.toString());
+                }}                
+              />
             </div>
-            <div class="col-md-3 mb-4">
-                <div class="column-header bg-primary text-white text-center">Medical Lab Scientists</div>
-                <div class="column-item">🟢 MLS 1</div>
-                <div class="column-item">🟢 MLS 2</div>
+            <button type="button" className="btn btn-primary w-100" onClick={addPrescription}>Add</button>
+           </div>
+          <div className="col-md-6">
+            <div id="prescriptionList" className="border p-3" style={{minHeight: '200px'}}>
+              {prescriptions.map((p) => (
+                <div key={p.id} className="prescription-item d-flex justify-content-between align-items-center mb-2">
+                  <span>{p.name} {" "}{" "} ({p.dosage})</span>
+                  <button type="button" className="btn btn-danger btn-sm" onClick={() => deletePrescription(p.id)}>Delete</button>
+                </div>
+              ))}
             </div>
-            <div class="col-md-3 mb-4">
-                <div class="column-header bg-primary text-white text-center">Nurses</div>
-                <div class="column-item">🟢 Nurse 1</div>
-                <div class="column-item">🟢 Nurse 2</div>
-            </div>
+          </div>
         </div>
+        <div className="row mt-4">
+          <div className="col-12">
+            <button type="submit" className="btn btn-success w-100">Submit</button>
+          </div>
+        </div>
+      </form>
     </div>
+              <br /><br />
 
     </>
   );

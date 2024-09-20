@@ -108,7 +108,7 @@ const Footer = () => {
                         <a className="text-white" href="#">mediConsult</a>, All right reserved.
                     </div>
                     <div className="col-md-6 text-center text-md-start">
-                        Designed By <a className="text-white" href="https://friskychuks.vercel.app">friskyTech</a> Frontend By <a href="">smooth-Tim</a>
+                        Designed By <a className="text-white" href="https://friskychuks.vercel.app">friskyTech</a> Frontend By <a className='text-white' href="https://www.linkedin.com/in/timothy-olanrewaju750/">SmoothTech</a>
                     </div>
                 </div>
             </div>

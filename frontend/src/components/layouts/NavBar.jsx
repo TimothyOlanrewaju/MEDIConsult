@@ -20,26 +20,26 @@ const NavBar = ({ baseURL }) => {
     if(localStorage.getItem('access_token')){setEmail(localStorage.getItem('email'))}
   },)
 
-  useEffect(() => {
-    if (email) {
-        const token = localStorage.getItem('access_token')
-        const interval = setInterval(() => {
-            api.post(`${baseURL}/accounts/update_activity/`, {}, {
-            headers: {
-                "Authorization": `FRISKY ${token}`,
-            },
-            });
-      }, 30000);  // 30 seconds interval
+//   useEffect(() => {
+//     if (email) {
+//         const token = localStorage.getItem('access_token')
+//         const interval = setInterval(() => {
+//             api.post(`${baseURL}/accounts/update_activity/`, {}, {
+//             headers: {
+//                 "Authorization": `FRISKY ${token}`,
+//             },
+//             });
+//       }, 30000);  // 30 seconds interval
 
-      return () => clearInterval(interval);
-    }
-  }, [email]);
+//       return () => clearInterval(interval);
+//     }
+//   }, [email]);
   
   useEffect(() => {  
       const checkAuth = () => {  
       if (localStorage.getItem('access_token') !== null) {        
           setIsAuth(true);
-        //   setEmail(localStorage.getItem('email'))
+          setEmail(localStorage.getItem('email'))
       }else {
         setIsAuth(false);
         setEmail('');
@@ -59,6 +59,7 @@ const NavBar = ({ baseURL }) => {
   return (
     <>
         {/* <!-- Topbar Start --> */}
+        <div className="top">
         <div className="container-fluid bg-primary px-5 d-none d-lg-block">
             <div className="row gx-0">
                 <div className="col-lg-4 text-center text-lg-start mb-2 mb-lg-0">
@@ -150,6 +151,7 @@ const NavBar = ({ baseURL }) => {
                 />
             </div>
             
+        </div>
         </div>
     </>
   );

@@ -51,7 +51,7 @@ def get_all_users_view(request):
 
 
 class UpdateActivityView(APIView):
-    permission_classes = [AllowAny]
+    # permission_classes = [AllowAny]
 
     def post(self, request):
         UserStatus.objects.filter(user=request.user).update(

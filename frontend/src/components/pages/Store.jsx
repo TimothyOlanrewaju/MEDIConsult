@@ -3,8 +3,8 @@ import React from 'react'
 const Store = () => {
   return (
     <>
-    <div className="container-fluid destination py-5">
-            <div className="container py-5">
+    <div className="container-fluid destination pb-1">
+            <div className="container">
                 <div className="mx-auto text-center mb-5" style={{maxWidth: "900px"}}>
                     <h5 className="section-title px-3">Items</h5>
                     <h1 className="mb-0">Popular Items</h1>

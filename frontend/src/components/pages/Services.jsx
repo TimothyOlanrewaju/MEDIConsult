@@ -3,8 +3,8 @@ import React from "react";
 const Services = () => {
   return (
     <>
-      <div className="container-fluid bg-light service py-5">
-            <div className="container py-5">
+      <div className="container-fluid bg-light service">
+            <div className="container">
                 <div className="mx-auto text-center mb-5" style={{maxWidth: "900px"}}>
                     <h5 className="section-title px-3">Services</h5>
                     <h1 className="mb-0">Our Services</h1>

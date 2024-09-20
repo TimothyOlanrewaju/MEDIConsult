@@ -33,10 +33,10 @@ INSTALLED_APPS = [
 
     'accounts',
     'orders',
-    'items',
     'addresses',
     'clinicians',
     'consultations',
+    'prescriptions',
 ]
 
 MIDDLEWARE = [

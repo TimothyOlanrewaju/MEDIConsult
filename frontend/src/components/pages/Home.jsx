@@ -51,15 +51,13 @@ const Home = () => {
                     className="text-white text-uppercase fw-bold mb-4"
                     style={{ letterSpacing: "3px" }}
                   >
-                    Explore The World
+                    Be happy always
                   </h4>
                   <h1 className="display-2 text-capitalize text-white mb-4">
-                    Find Your Perfect Tour At Travel
+                    Find Your Perfect care At mediConsult
                   </h1>
                   <p className="mb-5 fs-5">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s,
+                    Your well being is our concern. 
                   </p>
                 </div>
               </div>
@@ -76,15 +74,13 @@ const Home = () => {
                     className="text-white text-uppercase fw-bold mb-4"
                     style={{ letterSpacing: "3px" }}
                   >
-                    Explore The World
+                    Be happy always
                   </h4>
                   <h1 className="display-2 text-capitalize text-white mb-4">
-                    You Like To Go?
+                    Want some care?
                   </h1>
                   <p className="mb-5 fs-5">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s,
+                    It's just a few clicks away. Register with us and get free consultations now!!!
                   </p>
                   {/* <div className="d-flex align-items-center justify-content-center">
                     <a

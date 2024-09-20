@@ -1,10 +1,9 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import CustomUser
 from django.utils import timezone
 from datetime import timedelta
 
-from .serializers import CustomUserSerializer
+from .models import CustomUser
 
 
 def get_online_users():

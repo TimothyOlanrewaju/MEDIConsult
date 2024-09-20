@@ -1,3 +1,50 @@
+
+.prescription-item {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid rgb(146, 144, 144);
+}
+
+#prescriptionList {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+}
+
+.top{
+  /* position: fixed !important; */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  /* margin-bottom: 90px; */
+}
+
+main {
+  flex: 1;
+  margin-top: 66px;
+}
+
+@media (max-width:992px){
+  main{
+    flex:1;
+    margin-top:0px;
+    /* margin-bottom: 0px; */
+  }
+}
 .chat-container {
   display: flex;
   height: 75vh;
@@ -98,21 +145,6 @@
 }
 
 /***Another Chat End**/
-
-.column-header {
-  font-weight: bold;
-  background-color: #f8f9fa;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-bottom: 2px solid #dee2e6;
-}
-.column-item {
-  padding: 10px;
-  margin-bottom: 5px;
-  background-color: #ffffff;
-  border: 1px solid #dee2e6;
-}
-
 #spinner {
   opacity: 0;
   visibility: hidden;
@@ -1432,6 +1464,7 @@
 /*** Footer Start ***/
 .footer {
   background: var(--bs-dark);
+  margin-top: auto !important
 }
 .footer .footer-item a {
   line-height: 30px;
