@@ -118,6 +118,34 @@ const NavBar = ({ baseURL }) => {
                     </h1>
                     {/* <!-- <img src="img/logo.png" alt="Logo"> --> */}
                 </a>
+                <div className="middle">
+                { email ? 
+                            <>
+                            <Link onClick={handleSignout}><small className="me-3 text-light"><i onClick={handleSignout} className="fa fa-sign-in-alt me-2"></i>Logout</small></Link>
+                            <div className="dropdown">
+                            <a href="#" className="dropdown-toggle text-light" data-bs-toggle="dropdown"><small><i className="fas fa-user-alt me-2"></i> {email}</small></a>
+                            <div className="dropdown-menu rounded">
+                                <Link to="/auth/profile" className="dropdown-item"><i className="fas fa-user-alt me-2"></i> My Profile</Link>
+                                <a href="#" className="dropdown-item"><i className="fas fa-comment-alt me-2"></i> Inbox</a>
+                                <a href="#" className="dropdown-item"><i className="fas fa-bell me-2"></i> Notifications</a>
+                                <a href="#" className="dropdown-item"><i className="fas fa-cog me-2"></i> Account Settings</a>
+                                <Link onClick={handleSignout} className="dropdown-item"><i className="fas fa-power-off me-2"></i> Logout</Link>
+                            </div>
+                        </div>
+                            </>
+                            :
+                            <>
+                            <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={()=>navigate("/login")}
+                  >
+                    Login
+                  </button>
+                            </>
+                }
+                
+                </div>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span className="fa fa-bars"></span>
                 </button>

@@ -45,6 +45,19 @@ main {
     /* margin-bottom: 0px; */
   }
 }
+
+@media (max-width:991px){
+  .middle{
+    display: block
+  }
+}
+
+@media (min-width:991px){
+  .middle{
+    display: none;
+  }
+}
+
 .chat-container {
   display: flex;
   height: 75vh;
@@ -1111,7 +1124,7 @@ main {
 /*** Tour Booking Start ***/
 .booking {
   background: linear-gradient(rgba(19, 53, 123, 0.8), rgba(19, 53, 123, 0.8)),
-    url(../img/tour-booking-bg.jpg);
+    url(../img/login_image.jpg);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;

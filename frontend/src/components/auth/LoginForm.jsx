@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../../AxiosInstance";
+import { useMessage } from '../contexts/MessageContext'
 
 export default function LoginForm({ baseURL }) {
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
-  const phone = '080'
-  const navigate = useNavigate()
+  // const [msg, setMsg] = useState("");
+  const phone = '080';
+  const navigate = useNavigate();
+  const { showMessage } = useMessage();
 
   const activationMsg = (
     <span>
@@ -21,16 +23,22 @@ export default function LoginForm({ baseURL }) {
     e.preventDefault();
     const user = {email:email, password:password}
 
-    const checkUser = await api.get(`${baseURL}/accounts/get_user/${email}/${phone}/`)
-
-    if(checkUser.data.length<1){
-      setMsg('This user does not exist')
-      return msg
-    } else
+    try{
+      const checkUser = await api.get(`${baseURL}/accounts/get_user/${email}/${phone}/`)
+      
+      if(checkUser.data.length<1){
+        // setMsg('This user does not exist')
+        showMessage('This user does not exist','error');
+        // return msg
+      } else
       if(checkUser.data[0].is_active===false){
-        setMsg(activationMsg)
-        return msg
+        showMessage(activationMsg)
+        // return msg
       }
+    }
+    catch (error){
+        showMessage('An Error has Occured. Try again', 'error')
+    }
 
     // GENERATE TOKEN
     const res = await api.post(`${baseURL}/auth/jwt/create/`, user)
@@ -62,7 +70,7 @@ export default function LoginForm({ baseURL }) {
                   <div className="col-lg-3"></div>
                   <div className="col-lg-6">
                       <h1 className="text-white mb-3">Login</h1>
-                      <h4 style={{color:"red"}}>{msg}</h4>
+                      {/* <h4 style={{color:"red"}}>{msg}</h4> */}
                       <form onSubmit={handleSubmit}>
                           <div className="row g-3">
                               <div className="col-md-12">

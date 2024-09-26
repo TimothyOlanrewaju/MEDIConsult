@@ -27,7 +27,7 @@ const OnlineUsers = ({ baseURL }) => {
 
     return (
         <>
-            <div className='text-center'> <br /><br /><br /><br />
+            <div className='text-center'>
                 { onlineUsers.length > 0 ?
                 <>
                     <h3>Clinicians currently Online </h3>

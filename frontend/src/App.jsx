@@ -25,6 +25,8 @@ import SearchResults from "./components/contexts/SearchResults"
 import { useEffect, useState } from "react"
 import api from "./AxiosInstance"
 import RaisePrescription from "./components/prescriptions/RaisePrescription"
+import { MessageProvider } from './components/contexts/MessageContext';
+import MessageModal from './components/layouts/MessageModal';
 
 
 const App = () => {
@@ -48,8 +50,10 @@ const App = () => {
   return (
       <SearchProvider>
       <BrowserRouter>
+      <MessageProvider>
         <NavBar baseURL={baseURL} />
         <main>
+        <MessageModal />
           <Routes>
             <Route path="/search" element={<SearchResults baseURL={baseURL} />} />
             <Route path="/" element={<Home/>}/>
@@ -73,6 +77,7 @@ const App = () => {
           </Routes>
         </main>
         <Footer/>
+      </MessageProvider>
       </BrowserRouter>
       </SearchProvider>
   )
