@@ -37,13 +37,13 @@ const Profile = ({baseURL, getUserInfo}) => {
 
 
   return (
-    <> <br />
+    <>
         <div className="container-fluid about py-5">
             <div className="container py-5">
                 <div className="row g-3 align-items">
                     <div className="col-lg-2">
                         <div className="h-50">
-                            <img src="/src/assets/img/guide-4.jpg" className="img-fluid w-100 h-100" alt=""/>
+                            <img src="/static/assets/img/guide-4.jpg" className="img-fluid w-100 h-100" alt=""/>
                         </div>
                         <div className="col-sm-6">
                             <p className="mb-0">

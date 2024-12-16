@@ -10,7 +10,7 @@ const OnlineUsers = ({ baseURL }) => {
     useEffect(() => {
         const fetchOnlineUsers = async () => {
             try {
-                const response = await api.get(`${baseURL}/accounts/online_users/`);
+                const response = await api.get(`${baseURL}/accounts/online_clinicians/`);
                 const filteredUsers = response.data.filter(user => parseInt(user.user) !== parseInt(userId))
                 setOnlineUsers(filteredUsers);
             } catch (error) {
@@ -31,33 +31,64 @@ const OnlineUsers = ({ baseURL }) => {
                 { onlineUsers.length > 0 ?
                 <>
                     <h3>Clinicians currently Online </h3>
-                    <i>Click a clinician to start consultation now</i><hr />
-                        {onlineUsers.map(user => (
-                            <h5 key={user.id}>
-                                <Link to={ `/message/${user.user_id}` }>{user.fullname} | {user.user_email}</Link>
-                            </h5>
-                        ))}
-                            <div className="container mt-5">
+                    <i>Click a clinician to start consultation now</i>
+                        <div className="container mt-5">
                             <div className="row">
                                 <div className="col-md-3 mb-4">
                                     <div className="column-header bg-primary text-white text-center">Doctors</div>
-                                    <div className="column-item">🟢 Doctor 1</div>
-                                    <div className="column-item">🟢 Doctor 2</div>
-                                </div>
-                                <div className="col-md-3 mb-4">
-                                    <div className="column-header bg-primary text-white text-center">Pharmacists</div>
-                                    <div className="column-item">🟢 Pharmacist 1</div>
-                                    <div className="column-item">🟢 Pharmacist 2</div>
-                                </div>
-                                <div className="col-md-3 mb-4">
-                                    <div className="column-header bg-primary text-white text-center">Medical Lab Scientists</div>
-                                    <div className="column-item">🟢 MLS 1</div>
-                                    <div className="column-item">🟢 MLS 2</div>
-                                </div>
-                                <div className="col-md-3 mb-4">
+                                        {onlineUsers.map(user=>(
+                                            <> 
+                                                {user.category_info==='Doctor' && user.applicant !== parseInt(userId) ? 
+                                                <div className="column-item text-left">
+                                                    🟢 <Link to={ `/message/${user.applicant}` }>
+                                                            {user.applicant_info.name} 
+                                                        </Link>
+                                                </div> : ""
+                                                }
+                                            </>
+                                        ))}
+                                    </div>
+                                    <div className="col-md-3 mb-4">
+                                        <div className="column-header bg-primary text-white text-center">Pharmacists</div>
+                                        {onlineUsers.map(user=>(
+                                            <> 
+                                                {user.category_info==='Pharmacist' && user.applicant !== parseInt(userId) ? 
+                                                <div className="column-item text-left">
+                                                    🟢 <Link to={ `/message/${user.applicant}` }>
+                                                            {user.applicant_info.name} 
+                                                        </Link>
+                                                </div> : ""
+                                                }
+                                            </>
+                                        ))}
+                                    </div>
+                                    <div className="col-md-3 mb-4">
+                                        <div className="column-header bg-primary text-white text-center">Medical Lab Scientists</div>
+                                        {onlineUsers.map(user=>(
+                                            <> 
+                                                {user.category_info==='MLS' && user.applicant !== parseInt(userId) ? 
+                                                <div className="column-item text-left">
+                                                    🟢 <Link to={ `/message/${user.applicant}` }>
+                                                            {user.applicant_info.name} 
+                                                        </Link>
+                                                </div> : ""
+                                                }
+                                            </>
+                                        ))}
+                                    </div>
+                                    <div className="col-md-3 mb-4">
                                     <div className="column-header bg-primary text-white text-center">Nurses</div>
-                                    <div className="column-item">🟢 Nurse 1</div>
-                                    <div className="column-item">🟢 Nurse 2</div>
+                                    {onlineUsers.map(user=>(
+                                        <> 
+                                            {user.category_info==='Nurse' && user.applicant !== parseInt(userId) ? 
+                                            <div className="column-item text-left">
+                                                🟢 <Link to={ `/message/${user.applicant}` }>
+                                                        {user.applicant_info.name} 
+                                                    </Link>
+                                            </div> : ""
+                                            }
+                                        </>
+                                    ))}
                                 </div>
                             </div>
                         </div>

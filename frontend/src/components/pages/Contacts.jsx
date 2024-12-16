@@ -1,7 +1,7 @@
 const Contacts = () => {
   return (
     <>
-      <div className="container-fluid contact bg-light">
+      <div className="container-fluid contact bg-light py-5">
         <div className="container py-5">
           {/* <div
             className="mx-auto text-center mb-5"

@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link } from 'react-router-dom';
 import api from '../../AxiosInstance';
 
 const MessagingComponent = ({ baseURL, usersList }) => {
+    const [chatPartners, setChatPartners] = useState([]);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const navigate = useNavigate()
@@ -18,6 +19,24 @@ const MessagingComponent = ({ baseURL, usersList }) => {
     const currentUser = localStorage.getItem('user_id')
 
     const getUser = usersList.filter(user => user.id === chatPartner)[0]
+
+
+    useEffect(() => {
+        const fetchChatPartners = async () => {
+          try {
+            const response = await api.get(`${baseURL}/consultations/chat_list/${currentUser}/`, {
+              headers: {
+                Authorization: `FRISKY ${localStorage.getItem('access_token')}`
+              }
+            });
+            setChatPartners(response.data.chat_partners);
+          } catch (error) {
+            console.error('Error fetching chat partners:', error);
+          }
+        };
+    
+        fetchChatPartners();
+      }, []);
     
     // Fetch messages initially and on a regular interval
     useEffect(() => {
@@ -59,51 +78,126 @@ const MessagingComponent = ({ baseURL, usersList }) => {
 
     return (
         <>
-            <br /><br /><br />
-            <div className='chat-container'> 
-                <div className="chat-list">
-                    <h4>Chat List</h4>
-                </div>
-                <div className="chat-window">
-                    <div className="chat-header">
-                        Consultation with {getUser.firstname} {getUser.lastname}
-                        <span style={{float:"right"}}>
-                            <Link to={`/prescribe/${getUser.id}`}> 
-                                <button className='btn btn-primary'>Raise Prescription</button>
-                            </Link>
-                        </span>
-                    </div>
-                    <div className="chat-messages">
-                        {messages.map(msg => (
-                            <div key={msg.id} className={`message ${parseInt(msg.sender) === parseInt(currentUser) ? 'text-right' : 'text-left'}`}>
-                                <p>
-                                    <span>
-                                        <p>{
-                                            msg.content}
-                                            <span style={{fontSize:"x-small", textIndent:"1em"}}>
-                                                {new Date(msg.timestamp).toLocaleTimeString()}
-                                            </span>
-                                        </p>
-                                    </span>
-                                </p>
+            <main className="content">
+                <div className="container p-1 py-2">
+
+                    {/* <h1 className="h3 mb-3">Messages</h1> */}
+                    <Link to="/chat_list" className="btn btn-info btn-sm mr-1 mb-2 px-3 d-md-inline-block"> <i class="bi bi-caret-left-fill"></i>Go back to Chatlist</Link>
+                    
+                    <div className="card">
+                        <div className="row g-0">
+                            <div className="message-sidebar col-12 col-lg-5 col-xl-3 border-right">
+
+                                <div className="px-4 d-none d-md-block">
+                                    <div className="d-flex align-items-center">
+                                        <div className="flex-grow-1">
+                                            <input type="text" className="form-control my-3" placeholder="Search..." />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {chatPartners.map((partner)=>(
+                                    <Link to={`/message/${partner.id}`} className="list-group-item list-group-item-action border-0">
+                                        <div className="badge bg-success float-right">5</div>
+                                        <div className="d-flex align-items-start">
+                                            <img src="https://bootdey.com/img/Content/avatar/avatar5.png" className="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40" />
+                                            <div className="flex-grow-1 ml-3">
+                                                {partner.name}
+                                                <div className="small"><span className="fas fa-circle chat-online"></span> Online</div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+
+                                <hr className="d-block d-lg-none mt-1 mb-0" />
+
+                                <hr className="d-block d-lg-none mt-1 mb-0" />
                             </div>
-                        ))}
+                            <div className="col-12 col-lg-7 col-xl-9">
+                                <div className="py-2 px-4 border-bottom d-lg-block">
+                                    <div className="d-flex align-items-center py-1">
+                                        {/* <div className="position-relative">
+                                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" className="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40" />
+                                        </div> */}
+                                        <div className="flex-grow-1 pl-3">
+                                            <strong>{getUser.firstname} {getUser.lastname}</strong>
+                                            <div className="text-muted small"><em>Typing...</em></div>
+                                        </div>
+                                        <div>
+                                            <Link to={`/prescribe/${getUser.id}`} style={{marginRight:"3px"}}>              
+                                                <button className="btn btn-info btn-sm mr-1 px-3 d-md-inline-block">Raise Prescription</button>
+                                            </Link>
+                                            <button className="btn btn-primary btn-sm mr-1 px-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-phone feather-lg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></button>
+                                            <button className="btn btn-info btn-sm mr-1 px-3 d-md-inline-block"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-video feather-lg"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></button>
+                                            {/* <button className="btn btn-light border btn-lg px-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-more-horizontal feather-lg"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button> */}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="position-relative">
+                                    <div className="chat-messages p-4" style={{backgroundColor:"faf6e3"}}>
+                                        {messages.map(msg => (
+                                            <>
+                                                {parseInt(msg.sender) === parseInt(currentUser) ?
+                                                    <div className='row' style={{ justifyContent: "flex-start" }}>
+                                                        <div className="current-user" style={{maxWidth: '80%'}}>
+                                                        <div>
+                                                            {/* <img src="https://bootdey.com/img/Content/avatar/avatar1.png" className="rounded-circle mr-1" alt="Chris Wood" width="40" height="40" /> */}
+                                                            <div className="text-muted small text-nowrap mt-2"  style={{fontSize:"x-small"}}>
+                                                                {new Date(msg.timestamp).toLocaleTimeString()} | {new Date(msg.timestamp).toLocaleDateString()}
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex-shrink-1 rounded py-1 px-3 mr-3" style={{backgroundColor:"darkblue", color:"white"}}>
+                                                            <div className="font-weight-bold mb-1" style={{fontSize:"x-small"}}>
+                                                            <i className="fa-solid fa-user"></i> &nbsp;
+                                                                You
+                                                            </div>
+                                                            {msg.content}
+                                                        </div><br />
+                                                    </div>
+                                                    </div>
+                                                    :
+                                                    <div className='row' style={{ justifyContent: "flex-end" }}>
+                                                        <div className="receiver" style={{maxWidth: '80%'}}>
+                                                            <div>
+                                                                {/* <img src="https://bootdey.com/img/Content/avatar/avatar3.png" className="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40" /> */}
+                                                                <div className="text-muted small text-nowrap mt-2" style={{fontSize:"x-small"}}>
+                                                                    {new Date(msg.timestamp).toLocaleTimeString()} | {new Date(msg.timestamp).toLocaleDateString()}
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex-shrink-1 rounded py-1 px-3 ml-3" style={{backgroundColor:"grey", color:"white"}}>
+                                                                <div className="font-weight-bold mb-1" style={{fontSize:"x-small"}}>
+                                                                    <i className="fa-solid fa-user"></i> &nbsp;
+                                                                    {getUser.firstname} {getUser.lastname}
+                                                                </div>
+                                                                {msg.content}
+                                                            </div><br />
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </>
+                                        ))}
+
+                                    </div>
+                                </div>
+
+                                <div className="flex-grow-0 py-3 px-4 border-top">
+                                    <form action="" className=''>
+                                        <div className="input-group">
+                                            <input type="text" className="form-control"
+                                            value={newMessage} 
+                                            onChange={e => setNewMessage(e.target.value)} 
+                                            placeholder="Type your message" />
+                                            <button onClick={sendMessage} className="btn btn-primary">Send</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
-                    <form action="" className='chat-input'>
-                        <input 
-                            type="text" 
-                            value={newMessage} 
-                            onChange={e => setNewMessage(e.target.value)} 
-                            placeholder="Type your message..."
-                        />
-                        <button onClick={sendMessage}>Send</button>
-                    </form>
-                    <br /><br />
                 </div>
-                <div className="chat-list">
-                    <h4>Bio of ChatPartner</h4>
-                </div>
-            </div>
+            </main>
         </>
     );
 }

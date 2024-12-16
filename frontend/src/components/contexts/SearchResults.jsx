@@ -1,13 +1,11 @@
 // src/pages/SearchResults.js
 import { useContext, useEffect, useState } from 'react';
 import { SearchContext } from './SearchContext';
-import { CartContext } from './CartContextProvider';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 
 const SearchResults = ({ baseURL }) => {
-  const {dispatch} = useContext(CartContext)
   const { search, user } = useContext(SearchContext);
   const [searchQuery] = search;
   const [items, setItems] = useState([]);

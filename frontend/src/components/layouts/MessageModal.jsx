@@ -8,7 +8,7 @@ const MessageModal = () => {
     if (showModal) {
       const timer = setTimeout(() => {
         hideMessage();
-      }, 20000);
+      }, 10000);
       return () => clearTimeout(timer);
     }
   }, [showModal, hideMessage]);
@@ -24,16 +24,17 @@ const MessageModal = () => {
       case 'warning':
         return 'orange';
       default:
-        return 'blue';
+        return 'darkblue';
     }
   };
 
   return (
-    <div style={{
+    <div className='modal' style={{
       position: 'relative',
-      top: 0,
+      top: 50,
       left: 0,
       right: '17px',
+      height: '30px',
       backgroundColor: getBackgroundColor(),
       color: 'white',
       padding: '10px',
@@ -42,7 +43,7 @@ const MessageModal = () => {
       alignItems: 'center',
       zIndex: 1000
     }}>
-      <span>{message}</span>
+      <p style={{paddingTop:"3px"}}>{message}</p>
       <span 
         style={{
           cursor: 'pointer', 

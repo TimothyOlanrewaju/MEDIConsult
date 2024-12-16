@@ -15,7 +15,7 @@ const About = () => {
                 }
               >
                 <img
-                  src="src/assets/img/unsplash2.jpg"
+                  src="/static/assets/img/unsplash2.jpg"
                   className="img-fluid w-100 h-100"
                   alt=""
                 />

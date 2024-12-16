@@ -1,10 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import axios from "axios";
+import { Spinner } from "../layouts/Spinner";
 
-export default function RegisterForm({ baseURL }) {
+import { useMessage } from "../contexts/MessageContext";
+
+export default function RegisterForm({ baseURL , loading, setLoading}) {
   const navigate = useNavigate();
-  const [msg, setMsg] = useState("");
+  const { showMessage } = useMessage();
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -15,7 +18,6 @@ export default function RegisterForm({ baseURL }) {
 
   const p = document.getElementById("password_check");
   const pp = document.getElementById("confirm_password");
-  const passwordInput = document.getElementById("passwordInput");
   const confirmpasswordInput = document.getElementById("confirmpasswordInput");
 
   const handleConfirmPassword = (e) => {
@@ -58,32 +60,42 @@ export default function RegisterForm({ baseURL }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     // Verify email and password
     await axios.get(`${baseURL}/accounts/get_user/${email}/${phone}/`)
       .then((res)=>{
         if(res.data[0].email===email){
-          setMsg("A User with this Email already exists!")
+          showMessage("A User with this Email already exists!", 'error')
+          setLoading(false)
         } else if(res.data[0].phone===phone){
-          setMsg("This Phone Number has already been used by another User!")
-        } else{setMsg("")}
+          showMessage("This Phone Number has already been used by another User!", 'error')
+          setLoading(false)
+        }
       }).finally( async()=>{
         // Create User
-        await axios.post(`${baseURL}/auth/users/`,user).then(()=>{
+        try {
+          await axios.post(`${baseURL}/auth/users/`,user).then(()=>{
+            showMessage("Registration Successful, check your mail for activation", 'success')
+            setLoading(false)
             navigate('/login')
-        })
+          })
+        } catch (err) {
+          showMessage("There was an error creating your record", 'error')
+          setLoading(false)
+        }
       })
   };
 
   return (
     <>
-      <div className="container-fluid booking py-5">
+      <div className="container-fluid booking">
         <div className="container py-5">
           <div className="row g-5 align-items-center">
             <div className="col-lg-12">
               <h1 className="text-white text-center mx-auto mb-3 p-2">
                 Register with us
               </h1>
-              <h3 style={{color:"red"}}> {msg} </h3>
+              <h3 style={{color:"red"}}> {showMessage} </h3>
               <form onSubmit={handleSubmit}>
                 <div className="row g-3">
                   <div className="col-md-6">
@@ -201,10 +213,16 @@ export default function RegisterForm({ baseURL }) {
                   <div className="col-12">
                     <button
                       className="btn btn-primary text-white w-100 py-3"
-                      type="submit"
+                      onClick={handleSubmit}
                     >
                       Register Now
                     </button>
+                    {loading && <Spinner/>}
+                  </div>
+                  <div className="text-center">
+                      <h6 className="text-white">Already registered? click &nbsp;
+                        <Link className="text-white" to='/login'>here to Login</Link>
+                      </h6>
                   </div>
                 </div>
               </form>

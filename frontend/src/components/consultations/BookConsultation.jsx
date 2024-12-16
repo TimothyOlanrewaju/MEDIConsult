@@ -54,9 +54,6 @@ const BookConsultation = ({ usersList }) => {
 
   return (
     <>
-      <br />
-      <br />
-      <br />
       <div className="chat-container">
         <div className="chat-list">
           {users.map((user) => (

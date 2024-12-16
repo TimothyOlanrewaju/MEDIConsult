@@ -18,7 +18,7 @@ const Home = () => {
           <div className="carousel-inner" role="listbox">
             <div className="carousel-item active">
               <img
-                src="src/assets/img/top-view-medicine-keyboard-arrangement.jpg"
+                src="/static/assets/img/top-view-medicine-keyboard-arrangement.jpg"
                 className="img-fluid"
                 alt="Image"
               />
@@ -41,7 +41,7 @@ const Home = () => {
             </div>
             <div className="carousel-item">
               <img
-                src="src/assets/img/unsplash2.jpg"
+                src="/static/assets/img/unsplash2.jpg"
                 className="img-fluid"
                 alt="Image"
               />
@@ -64,7 +64,7 @@ const Home = () => {
             </div>
             <div className="carousel-item">
               <img
-                src="src/assets/img/unsplash3.jpg"
+                src="/static/assets/img/unsplash3.jpg"
                 className="img-fluid"
                 alt="Image"
               />

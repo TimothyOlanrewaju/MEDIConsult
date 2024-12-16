@@ -1,3 +1,12 @@
+.rotate {
+  transition: transform 0.2s ease-in-out;
+}
+.rotate.collapsed::before {
+  content: '\u25BC'; 
+}
+.rotate::before {
+  content: '\u25B2'; 
+}
 
 .prescription-item {
   background-color: #f8f9fa;

@@ -1,15 +1,19 @@
-import axios from 'axios'
+import api from '../../AxiosInstance'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 
-const ResendActivation = ({ baseURL }) => {
-    const [msg, setMsg] = useState("")
+import { useMessage } from "../contexts/MessageContext";
+import { Spinner } from '../layouts/Spinner';
+
+const ResendActivation = ({ baseURL, loading, setLoading }) => {
     const [email, setEmail] = useState('')
+    const { showMessage } = useMessage();
 
     const resendActivation = async(e)=>{
         e.preventDefault()
-        await axios.post(`${baseURL}/auth/users/resend_activation/`, {email})
-        setMsg('Check your email for confirmation link')
+        setLoading(true)
+        await api.post(`${baseURL}/auth/users/resend_activation/`, {email})
+        showMessage('Check your email for confirmation link', 'success')
+        setLoading(false)
     }
 
 
@@ -20,8 +24,8 @@ const ResendActivation = ({ baseURL }) => {
                 <div className="row g-3 align-items">
                     <div className="col-lg-3"></div>
                     <div className="col-lg-6">
-                        <h4 style={{color:"green"}}>{msg}</h4>
                         <h5 className="section-about-title pe-3">Resend Activation Link</h5>
+                        <h4 style={{color:"red"}}>{showMessage}</h4>
                         <div className="row gy-1 gx-4 mb-4">
                             <div className="col-sm-12">
                                 <p className="mb-0">Email</p>
@@ -35,6 +39,7 @@ const ResendActivation = ({ baseURL }) => {
                         <button className="btn btn-primary rounded-pill py-3 px-5 mt-2" onClick={resendActivation} >
                             Send Activation Link
                         </button>
+                        {loading && <Spinner/>}
                     </div>
                     <div className="col-lg-3"></div>
                 </div>
